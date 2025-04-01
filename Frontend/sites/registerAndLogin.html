@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Login / Registrierung</title>
+  <!-- Eigene CSS -->
+  <link href="../css/styles.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height:100vh;">
+      <div class="col-12 col-md-6">
+        <div class="card shadow">
+          <div class="card-body">
+            <!-- Toggle Buttons -->
+            <div class="text-center mb-4">
+              <button id="showLogin" class="btn btn-secondary">Login</button>
+              <button id="showRegister" class="btn btn-secondary">Registrierung</button>
+            </div>
+            <!-- Login Container -->
+            <div id="loginContainer">
+              <h2 class="text-center mb-4">Login</h2>
+              <form id="loginForm">
+                <div class="form-group">
+                  <label for="login_email">Email/Username :</label>
+                  <input  class="form-control" id="login_email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="login_password">Passwort:</label>
+                  <input type="password" class="form-control" id="login_password" name="password" required>
+                </div>
+                <!-- Checkbox "Login merken" -->
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                  <label class="form-check-label" for="remember">Login merken</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Einloggen</button>
+              </form>
+            </div>
+            <!-- Registrierungs Container (anfangs ausgeblendet) -->
+            <div id="registrationContainer" style="display:none;">
+              <h2 class="text-center mb-4">Registrierung</h2>
+              <form id="registrationForm" novalidate>
+                <div class="form-group">
+                  <label for="title">Anrede:</label>
+                  <select class="form-control" id="title" name="title" required>
+                    <option value="">Bitte wählen</option>
+                    <option>Herr</option>
+                    <option>Frau</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="firstName">Vorname:</label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Nachname:</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                  <label for="address">Adresse:</label>
+                  <input type="text" class="form-control" id="address" name="address" required>
+                </div>
+                <div class="form-group">
+                  <label for="zip">PLZ:</label>
+                  <input type="text" class="form-control" id="zip" name="zip" pattern="\d{4,}" title="Bitte mindestens 4-stellige PLZ eingeben" required>
+                </div>
+                <div class="form-group">
+                  <label for="city">Ort:</label>
+                  <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Emailadresse:</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="username_reg">Benutzername:</label>
+                  <input type="text" class="form-control" id="username_reg" name="username" required>
+                </div>
+                <div class="form-group">
+                  <label for="password_reg">Passwort:</label>
+                  <input type="password" class="form-control" id="password_reg" name="password" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Passwort bestätigen:</label>
+                  <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                  <small id="passwordError" class="form-text text-danger" style="display:none;">Die Passwörter stimmen nicht überein.</small>
+                </div>
+                <div class="form-group">
+                  <label for="paymentInfo">Zahlungsinformationen:</label>
+                  <input type="text" class="form-control" id="paymentInfo" name="paymentInfo" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="registerButton" disabled>Registrieren</button>
+              </form>
+            </div>
+          </div> <!-- card-body -->
+        </div> <!-- card -->
+      </div> <!-- col -->
+    </div> <!-- row -->
+  </div> <!-- container -->
+  
+  <!-- JS-Dateien einbinden -->
+  <script src="../js/auth.js"></script>
+
+</body>
+</html>
