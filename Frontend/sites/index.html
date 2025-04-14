@@ -1,120 +1,89 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Bücher-Webshop</title>
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/styles.css">
-  <style>
-    .book-img {
-      height: 220px;
-      object-fit: cover;
-      width: 100%;
-    }
-    .filter-sidebar {
-      min-width: 250px;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BookSphere - Willkommen</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Mein Webshop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown" id="userDropdown" style="display: none;">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdownLink" role="button" data-toggle="dropdown">
-          <span id="usernameDisplay"></span>
-          <span class="online-indicator"></span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="#" id="logoutBtn">Logout</a>
-        </div>
-      </li>
-      <li class="nav-item" id="loginButtonArea" style="display: none;">
-        <a class="nav-link btn btn-primary" href="../sites/registerAndLogin.html">Login / Registrierung</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  <!-- HEADER -->
+  <div id="header-placeholder"></div>
 
-<!-- Layout mit Sidebar und Inhalt -->
-<div class="d-flex">
-  <!-- Filter Sidebar (außerhalb .container) -->
-  <div class="filter-sidebar p-3 border-right">
-    <div class="card border-primary sticky-top shadow-sm" style="top: 80px;">
-      <div class="card-body">
-        <h5 class="text-primary font-weight-bold mb-0">🔍 Filter</h5>
-        <div class="form-group">
-          <input type="text" id="filter-title" class="form-control" placeholder="Titel">
+  <!-- INHALT -->
+  <main>
+
+    <div class="welcome-box">
+      <!-- LOGO -->
+      <div class="logo-container">
+        <img src="../img/booksphere-logo.png" alt="BookSphere Logo">
+      </div>
+
+      <!-- WELCOME TEXT -->
+      <h2>Entdecke die Welt der Bücher</h2>
+      <p>Stöbere durch Klassiker, Neuheiten & Geheimtipps – BookSphere bringt dir Literatur direkt ins Herz.</p>
+      <a href="#books-container" class="button">Unsere Bücher ansehen</a>
+
+      <!-- FILTER -->
+      <div class="filter-bar">
+        <input type="text" id="filter-title" placeholder="Titel">
+        <input type="text" id="filter-author" placeholder="Autor">
+        <input type="text" id="filter-genre" placeholder="Genre">
+        <input type="text" id="filter-language" placeholder="Sprache">
+        <input type="number" id="filter-max-price" placeholder="Max. Preis">
+        <button class="button" id="applyFilterBtn">Filtern</button>
+      </div>
+    </div>
+
+    <!-- BÜCHERLISTE -->
+    <div id="books-container" class="book-grid"></div>
+
+  </main>
+
+  <!-- ℹMODAL -->
+  <div class="modal fade" id="bookDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content p-4">
+        <div class="modal-header">
+          <h3 class="modal-title" id="modalBookTitle">Buchtitel</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="form-group">
-          <input type="text" id="filter-author" class="form-control" placeholder="Autor">
-        </div>
-        <div class="form-group">
-          <input type="text" id="filter-genre" class="form-control" placeholder="Genre">
-        </div>
-        <div class="form-group">
-          <input type="text" id="filter-language" class="form-control" placeholder="Sprache (de, en...)">
-        </div>
-        <div class="form-group">
-          <input type="text" id="filter-date" class="form-control" placeholder="Jahr (z. B. 2023)">
-        </div>
-        <div class="form-group">
-          <input type="number" id="filter-max-price" class="form-control" placeholder="Max. Preis (€)">
+        <div class="modal-body">
+          <img id="modalBookImage" src="" class="img-fluid mb-3" alt="Buchcover">
+          <p><strong>Autor:</strong> <span id="modalBookAuthor"></span></p>
+          <p><strong>Genre:</strong> <span id="modalBookGenre"></span></p>
+          <p><strong>Erscheinungsdatum:</strong> <span id="modalBookDate"></span></p>
+          <p><strong>Sprache:</strong> <span id="modalBookLanguage"></span></p>
+          <p><strong>Preis:</strong> <span id="modalBookPrice"></span> €</p>
+          <p><strong>Beschreibung:</strong> <span id="modalBookDescription"></span></p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Hauptinhalt -->
-  <div class="flex-grow-1">
-    <div class="container mt-4">
-      <h2 class="mb-4">Willkommen im Bücher-Webshop</h2>
-      <div class="row" id="books-container"></div>
-    </div>
-  </div>
-</div>
+  <!-- FOOTER -->
+  <div id="footer-placeholder"></div>
 
-<!-- Modal für Buchdetails -->
-<div class="modal fade" id="bookDetailModal" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Buchdetails</h5>
-        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-      </div>
-      <div class="modal-body">
-        <img id="modalBookImage" src="" class="img-fluid mb-3">
-        <h4 id="modalBookTitle"></h4>
-        <p><strong>Autor:</strong> <span id="modalBookAuthor"></span></p>
-        <p><strong>Genre:</strong> <span id="modalBookGenre"></span></p>
-        <p><strong>Erscheinungsdatum:</strong> <span id="modalBookDate"></span></p>
-        <p><strong>Preis:</strong> <span id="modalBookPrice"></span> €</p>
-        <p><strong>Sprache:</strong> <span id="modalBookLanguage"></span></p>
-        <hr>
-        <p id="modalBookDescription"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-        <button type="button" class="btn btn-primary">In den Warenkorb</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- SCRIPTS -->
+  <script src="../js/script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- jQuery & Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- DYNAMIC LOAD -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('../includes/header.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
-<!-- Dein JS -->
-<script src="../js/script.js"></script>
+      fetch('../includes/footer.html')
+        .then(response => response.text())
+        .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    });
+  </script>
 
 </body>
 </html>
