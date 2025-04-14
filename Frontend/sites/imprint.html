@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Impressum – BookSphere</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <main class="welcome-box">
+    <h2>Impressum</h2>
+    <p><strong>BookSphere Webshop</strong></p>
+    <p>Hochstädtplatz<br>1200 Wien<br>Österreich</p>
+    <p><strong>Vertreten durch:</strong><br>Armin Zukorlic</p>
+    <p><strong>Kontakt:</strong><br>
+      E-Mail: info@booksphere.at<br>
+      Tel.: +43 123 456789
+    </p>
+    <p><strong>Haftungsausschluss:</strong><br>
+      Alle Inhalte wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr.
+    </p>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script>
+    fetch("../includes/header.html").then(res => res.text()).then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+    });
+    fetch("../includes/footer.html").then(res => res.text()).then(data => {
+      document.getElementById("footer-placeholder").innerHTML = data;
+    });
+  </script>
+</body>
+</html>
