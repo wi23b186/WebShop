@@ -1,7 +1,7 @@
 <?php
 // dataHandler.php
 $host = 'localhost';
-$dbname = 'booksphere';
+$dbname = 'test';
 $username_db = 'root';
 $password_db = '';
 

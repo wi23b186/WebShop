@@ -1,11 +1,29 @@
 <header>
-    <div class="header-container">
-      <img src="../img/booksphere-logo.png" alt="BookSphere Logo" class="header-logo">
-      <nav class="nav-bar">
-        <a href="../sites/index.html" class="nav-link">Startseite</a>
-        <a href="../sites/registerAndLogin.html" class="nav-link">Registrieren</a>
-        <a href="../sites/login.html" class="nav-link">Login</a>
-      </nav>
-    </div>
-  </header>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+  <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; padding: 10px">
+    <img src="../img/booksphere-logo.png" alt="BookSphere Logo" class="header-logo" style="max-width:100px;">
+    <nav class="nav-bar" style="display: flex; gap: 1rem;">
+      <a href="../sites/index.html" class="nav-link">Startseite</a>
+      <a href="../sites/registerAndLogin.html" class="nav-link">Registrieren</a>
+      <a href="../sites/login.html" class="nav-link">Login</a>
+      <a href="../sites/cart.html" class="nav-link" style="position: relative;">
+        <i class="bi bi-cart-fill" style="font-size: 1.5rem; vertical-align: middle;"></i>
+        <span id="cart-count" style="
+          position: absolute;
+          top: -5px;
+          right: -10px;
+          background: red;
+          color: white;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          font-size: 12px;
+          text-align: center;
+          line-height: 20px;"></span>
+      </a>
+    </nav>
+  </div>
+ 
   
+</header>
