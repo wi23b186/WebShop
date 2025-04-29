@@ -42,7 +42,7 @@ $(document).ready(function() {
       };
       $.ajax({
         type: 'POST',
-        url: 'http://localhost//ProjektWebshop/WebShop/backend/config/login.php', // ggf. anpassen
+        url: window.location.origin + "/WebShop/Backend/config/login.php", // ggf. anpassen
         contentType: 'application/json',
         data: JSON.stringify(loginData),
         dataType: 'json',
@@ -92,7 +92,7 @@ $(document).ready(function() {
       };
       $.ajax({
         type: 'POST',
-        url: 'http://localhost//ProjektWebshop/WebShop/backend/config/register.php', // ggf. anpassen
+        url: window.location.origin + "/WebShop/Backend/config/login.php", // ggf. anpassen
         contentType: 'application/json',
         data: JSON.stringify(formData),
         dataType: 'json',

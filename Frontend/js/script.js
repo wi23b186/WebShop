@@ -1,7 +1,8 @@
 $(document).ready(function () {
   // Bücher vom Server laden und in "books" speichern
   $.ajax({
-    url: 'http://localhost/ProjektWebshop/WebShop/Backend/config/getbooks.php',
+    url: 'http://localhost/ProjektWebshop/WebShop/Backend/config/getbooks.php', // David
+    // url: 'http://localhost/WebShop/Backend/config/getbooks.php', // Armin
     method: 'GET',
     dataType: 'json',
     success: function (responseBooks) {
@@ -60,6 +61,7 @@ $(document).ready(function () {
     $.ajax({
       type: 'POST',
       url: 'http://localhost/ProjektWebshop/WebShop/Backend/config/addToCart.php',
+      // url: 'http://localhost/WebShop/Backend/config/addToCart.php', - Armin
       contentType: 'application/json',
       data: JSON.stringify({ id: productId }),
       dataType: 'json',
@@ -82,6 +84,7 @@ $(document).ready(function () {
       $.ajax({
         type: 'POST',
         url: 'http://localhost/ProjektWebshop/WebShop/Backend/config/addToCart.php',
+        // url: 'http://localhost/WebShop/Backend/config/addToCart.php', - Armin
         contentType: 'application/json',
         data: JSON.stringify({ id: productId }),
         dataType: 'json',
