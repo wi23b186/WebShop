@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <title>Impressum – BookSphere</title>
   <link rel="stylesheet" href="../css/styles.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
   <div id="header-placeholder"></div>
 
-  <main class="welcome-box">
+  <main class="welcome-box main-content">
     <h2>Impressum</h2>
     <p><strong>BookSphere Webshop</strong></p>
     <p>Hochstädtplatz<br>1200 Wien<br>Österreich</p>
@@ -25,12 +26,35 @@
   <div id="footer-placeholder"></div>
 
   <script>
-    fetch("../includes/header.html").then(res => res.text()).then(data => {
-      document.getElementById("header-placeholder").innerHTML = data;
-    });
-    fetch("../includes/footer.html").then(res => res.text()).then(data => {
-      document.getElementById("footer-placeholder").innerHTML = data;
-    });
-  </script>
+    // Dynamischen Pfad bestimmen
+    const headerPath = window.location.pathname.includes("/sites/")
+      ? "../includes/header.html"
+      : "includes/header.html";
+
+    const logedinScriptPath = window.location.pathname.includes("/sites/")
+      ? "../js/logedin.js"
+      : "js/logedin.js";
+
+    // Header laden und Skript nachträglich einfügen
+    fetch(headerPath)
+      .then(res => res.ok ? res.text() : Promise.reject("Header nicht gefunden"))
+      .then(data => {
+        document.getElementById("header-placeholder").innerHTML = data;
+
+        const script = document.createElement("script");
+        script.src = logedinScriptPath;
+        script.defer = true;
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error("Fehler beim Laden des Headers:", error));
+
+    // Footer laden
+    fetch("../includes/footer.html")
+      .then(res => res.ok ? res.text() : Promise.reject("Footer nicht gefunden"))
+      .then(data => {
+        document.getElementById("footer-placeholder").innerHTML = data;
+      })
+      .catch(error => console.error("Fehler beim Laden des Footers:", error));
+  </script>  
 </body>
 </html>

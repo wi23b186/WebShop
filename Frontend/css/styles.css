@@ -27,52 +27,98 @@ h1, h2, h3 {
   text-align: center;
 }
 
-/* === HEADER === */
-header {
+/* === HEADER (fixiert) === */
+header.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
   background-color: #1e1e1e;
   color: white;
-  padding: 1rem 2rem;
-}
-
-.header-container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: 1000;
 }
 
-.header-logo {
-  max-width: 80px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.nav-bar img {
+  height: 50px;
 }
 
-.nav-bar {
+/* Navigation */
+#main-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 2rem;
-  padding: 1rem 0;
+  align-items: center;
 }
 
-.nav-link {
+#main-menu li {
+  display: flex;
+  align-items: center;
+}
+
+#main-menu a {
   color: white;
-  font-weight: bold;
   text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
 }
 
-.nav-link:hover {
+#main-menu a:hover {
+  background-color: #33333380;
+}
+
+/* User-Status rechts oben */
+#user-status {
+  font-size: 14px;
+  color: white;
+}
+
+#user-status a {
   color: #d4a373;
+  margin-left: 10px;
 }
 
-/* === FOOTER === */
+#logout-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  background-color: #d4a373;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+#logout-btn:hover {
+  background-color: #a3b18a;
+}
+
+/* === FOOTER (fixiert) === */
 footer {
-  margin-top: 3rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
   font-size: 0.9rem;
   background-color: #1e1e1e;
   color: white;
   text-align: center;
   padding: 1rem;
+  z-index: 999;
+}
+
+/* Optional: Footer auf bestimmten Seiten ausblenden */
+body.no-footer footer {
+  display: none;
 }
 
 /* === LOGO BOX === */
@@ -188,4 +234,10 @@ footer {
 .welcome-box p {
   font-size: 1.1rem;
   color: #333;
+}
+
+/* === Hauptinhalt Abstand wegen Header === */
+.main-content {
+  margin-top: 90px;
+  padding-bottom: 60px; /* Platz für fixierten Footer */
 }
