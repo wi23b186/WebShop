@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Booksphere</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/navbar.js"></script>
+</head>
+<body>
+<header>
+    <img src="img/booksphere-logo.png" alt="Booksphere Logo" class="logo">
+    <nav id="nav-bar">
+        <!-- Dynamische Navigation -->
+    </nav>
+</header>
+
+<main>
+    <h1>Login</h1>
+    <form action="../backend/logic/requestHandler.php" method="POST" style="max-width: 400px; margin: 0 auto;">
+        <input type="hidden" name="action" value="login">
+        <label>Benutzername oder E-Mail:</label><br>
+        <input type="text" name="identifier" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Passwort:</label><br>
+        <input type="password" name="password" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label><input type="checkbox" name="remember"> Eingeloggt bleiben</label><br>
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #4a3f35; color: #fff; border: none; border-radius: 5px;">Login</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2025 Booksphere Webshop | <a href="imprint.html">Impressum</a></p>
+</footer>
+</body>
+</html>

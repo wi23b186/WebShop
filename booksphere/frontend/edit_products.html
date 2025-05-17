@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Produkte bearbeiten - Booksphere</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/edit_products.js"></script>
+</head>
+<body>
+<header>
+    <img src="img/booksphere-logo.png" alt="Booksphere Logo" class="logo">
+    <nav id="nav-bar"></nav>
+</header>
+
+<main>
+    <h1>Produkte bearbeiten</h1>
+
+    <table id="product-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Preis</th>
+                <th>Kategorie</th>
+                <th>Bewertung</th>
+                <th>Bild</th>
+                <th>Aktion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Wird per JS befüllt -->
+        </tbody>
+    </table>
+
+    <h2>Neues Produkt hinzufügen</h2>
+    <form id="new-product-form" enctype="multipart/form-data">
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="text" name="description" placeholder="Beschreibung" required>
+        <input type="number" name="price" placeholder="Preis (€)" step="0.01" required>
+        <input type="text" name="category" placeholder="Kategorie" required>
+        <input type="number" name="rating" placeholder="Rating" step="0.1" min="0" max="5" required>
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Produkt erstellen</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2025 Booksphere Webshop | <a href="imprint.html">Impressum</a></p>
+</footer>
+</body>
+</html>

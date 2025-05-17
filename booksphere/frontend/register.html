@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Registrieren - Booksphere</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/navbar.js"></script>
+</head>
+<body>
+<header>
+    <img src="img/booksphere-logo.png" alt="Booksphere Logo" class="logo">
+    <nav id="nav-bar">
+        <!-- Dynamische Navigation -->
+    </nav>
+</header>
+
+<main>
+    <h1>Registrieren</h1>
+    <form action="../backend/logic/requestHandler.php" method="POST" style="max-width: 600px; margin: 0 auto;">
+        <input type="hidden" name="action" value="register">
+        <label>Anrede:</label><br>
+        <input type="text" name="salutation" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Vorname:</label><br>
+        <input type="text" name="firstname" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Nachname:</label><br>
+        <input type="text" name="lastname" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Adresse:</label><br>
+        <input type="text" name="address" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Postleitzahl:</label><br>
+        <input type="text" name="postalcode" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Stadt:</label><br>
+        <input type="text" name="city" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>E-Mail:</label><br>
+        <input type="email" name="email" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Benutzername:</label><br>
+        <input type="text" name="username" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Passwort:</label><br>
+        <input type="password" name="password" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Passwort bestätigen:</label><br>
+        <input type="password" name="password_confirm" required style="width: 100%; margin-bottom: 10px;"><br>
+        <label>Zahlungsinformation:</label><br>
+        <input type="text" name="payment_info" required style="width: 100%; margin-bottom: 10px;"><br>
+        <button type="submit" style="width: 100%; padding: 10px; background-color: #4a3f35; color: #fff; border: none; border-radius: 5px;">Registrieren</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2025 Booksphere Webshop | <a href="imprint.html">Impressum</a></p>
+</footer>
+</body>
+</html>
