@@ -23,7 +23,7 @@ $(document).ready(function () {
         `);
     }
 
-    $.getJSON('../backend/logic/getAccountData.php', function (data) {
+    $.getJSON('../backend/logic/UserManagement/getAccountData.php', function (data) {
         if (!data.loggedIn || data.role !== 'customer') {
             window.location.href = 'login.html';
             return;
@@ -63,7 +63,7 @@ $(document).ready(function () {
     });
 
     function loadOrders() {
-        $.getJSON('../backend/logic/get_orders.php', function (orders) {
+        $.getJSON('../backend/logic/OrderHandling/get_orders.php', function (orders) {
             let html = '';
             let index = 0;
 

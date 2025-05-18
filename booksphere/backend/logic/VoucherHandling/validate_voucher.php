@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../config/dbaccess.php';
-require_once '../models/Voucher.class.php';
+require_once '../../config/dbaccess.php';
+require_once '../../models/Voucher.class.php';
 
 if (!isset($_GET['code'])) {
     http_response_code(400);
