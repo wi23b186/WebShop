@@ -20,6 +20,7 @@ $(document).ready(function () {
             <label>Stadt:<br><input type="text" id="city" value="${data.city}" class="large-input"></label><br><br>
             <label>Zahlungsinfo:<br><input type="text" id="payment_info" value="${data.payment_info}" class="large-input"></label><br><br>
             <label>Benutzername:<br><input type="text" id="username" value="${data.username}" class="large-input"></label><br><br>
+            <label>Aktuelles Passwort:<br><input type="password" id="current_password" class="large-input" required></label><br><br>
         `);
     }
 
@@ -46,8 +47,14 @@ $(document).ready(function () {
             postalcode: $('#postalcode').val(),
             city: $('#city').val(),
             payment_info: $('#payment_info').val(),
-            username: $('#username').val()
+            username: $('#username').val(),
+            current_password: $('#current_password').val()
         };
+
+        if (!updated.current_password) {
+            alert("Bitte gib dein aktuelles Passwort ein.");
+            return;
+        }
 
         $.post('../backend/logic/updateAccountData.php', updated, function (response) {
             if (response.success) {
@@ -86,7 +93,7 @@ $(document).ready(function () {
                                         <li>${item.name} – Menge: ${item.quantity} – Preis: € ${item.price}</li>
                                     `).join('')}
                                 </ul>
-                                 <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/invoice.php?order_id=${orderId}', '_blank')">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/invoice.php?order_id=${orderId}', '_blank')">
                                     Rechnung generieren
                                 </button>
                             </div>
