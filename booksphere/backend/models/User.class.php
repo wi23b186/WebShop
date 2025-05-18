@@ -63,5 +63,92 @@ class User {
             $id
         ]);
     }
+public function updatePartial($id, $data) {
+    if (empty($data)) {
+        return false; // nichts zu aktualisieren
+    }
+
+    // Spalten vorbereiten, z. B. "address = ?", "city = ?"
+    $columns = [];
+    $values = [];
+
+    foreach ($data as $key => $value) {
+        $columns[] = "$key = ?";
+        $values[] = $value;
+    }
+
+    $sql = "UPDATE users SET " . implode(', ', $columns) . " WHERE id = ?";
+    $values[] = $id;
+
+    $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute($values);
+}
+public function getUserById($id) {
+    $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->execute([$id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function autoLoginFromCookie() {
+    if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user'])) {
+        $user = $this->getUserById($_COOKIE['remember_user']);
+        if ($user) {
+            $_SESSION['user'] = $user;
+        }
+    }
+}
+
+public function getSessionUserData() {
+    if (isset($_SESSION['user'])) {
+        return [
+            'loggedIn' => true,
+            'username' => $_SESSION['user']['username'],
+            'role' => $_SESSION['user']['role']
+        ];
+    }
+    return ['loggedIn' => false];
+}
+
+public function changePassword($id, $currentPassword, $newPassword) {
+    if (strlen($newPassword) < 6) {
+        return ['success' => false, 'message' => 'Neues Passwort ist zu kurz (min. 6 Zeichen).'];
+    }
+
+    $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$row || !password_verify($currentPassword, $row['password'])) {
+        return ['success' => false, 'message' => 'Aktuelles Passwort ist falsch.'];
+    }
+
+    $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
+    $stmt = $this->pdo->prepare("UPDATE users SET password = ? WHERE id = ?");
+    $stmt->execute([$newHash, $id]);
+
+    return ['success' => true];
+}
+
+public function getCurrentUserData() {
+    if (!isset($_SESSION['user'])) {
+        return ['loggedIn' => false];
+    }
+
+    $user = $_SESSION['user'];
+
+    return [
+        'loggedIn' => true,
+        'role' => $user['role'],
+        'salutation' => $user['salutation'],
+        'firstname' => $user['firstname'],
+        'lastname' => $user['lastname'],
+        'address' => $user['address'],
+        'postalcode' => $user['postalcode'],
+        'city' => $user['city'],
+        'email' => $user['email'],
+        'payment_info' => $user['payment_info']
+    ];
+}
+
 }
 ?>

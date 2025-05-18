@@ -11,7 +11,7 @@ $(document).ready(function () {
             return;
         }
 
-        $.post('../backend/logic/changePassword.php', {
+        $.post('../backend/logic/UserManagement/changePassword.php', {
             current_password: current,
             new_password: neu
         }, function (response) {

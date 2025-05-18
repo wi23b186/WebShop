@@ -69,7 +69,7 @@ $(document).ready(function () {
     }
 
     function loadNav() {
-        $.getJSON('../backend/logic/userStatus.php', function (data) {
+        $.getJSON('../backend/logic/UserManagement/userStatus.php', function (data) {
             let nav = $('#nav-bar');
             nav.empty();
             nav.append('<a href="index.html">Startseite</a>');
@@ -85,7 +85,7 @@ $(document).ready(function () {
                     nav.append('<a href="account.html">Mein Konto</a>');
                     nav.append('<a href="change_password.html">Passwort ändern</a>');
                 }
-                nav.append('<a href="../backend/logic/logout.php">Logout (' + data.username + ')</a>');
+                nav.append('<a href="../backend/logic/UserManagement/logout.php">Logout (' + data.username + ')</a>');
             } else {
                 nav.append('<a href="register.html">Registrieren</a>');
                 nav.append('<a href="login.html">Login</a>');

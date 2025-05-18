@@ -35,7 +35,7 @@ $(document).ready(function () {
             return;
         }
 
-        $.getJSON('../backend/logic/validate_voucher.php?code=' + encodeURIComponent(code), function (response) {
+        $.getJSON('../backend/logic/VoucherHandling/validate_voucher.php?code=' + encodeURIComponent(code), function (response) {
             if (response.valid) {
                 const discount = parseFloat(response.available);
                 const newTotal = Math.max(0, originalTotal - discount);
@@ -89,7 +89,7 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: '../backend/logic/place_order.php',
+            url: '../backend/logic/OrderHandling/place_order.php',
             method: 'POST',
             data: {
                 payment: paymentMethod,
@@ -101,7 +101,8 @@ $(document).ready(function () {
                 $('#total-price').text('');
                 updateCartCount();
             },
-            error: function () {
+            error: function (xhr) {
+                console.error(xhr.responseText);
                 $('#order-message').text("Fehler beim Absenden der Bestellung.");
             }
         });
@@ -109,7 +110,7 @@ $(document).ready(function () {
 
     // Warenkorb anzeigen
     function updateCartView() {
-        $.getJSON('../backend/logic/cartHandler.php?action=getItems', function (items) {
+        $.getJSON('../backend/logic/OrderHandling/cartHandler.php?action=getItems', function (items) {
             let html = '';
             let total = 0;
 
@@ -169,7 +170,7 @@ $(document).ready(function () {
 
     // Loginstatus
     function checkLoginStatus() {
-        $.getJSON('../backend/logic/userStatus.php', function (data) {
+        $.getJSON('../backend/logic/UserManagement/userStatus.php', function (data) {
             if (!data.loggedIn) {
                 $('#login-warning').removeClass('d-none');
                 $('#order-button').prop('disabled', true);
