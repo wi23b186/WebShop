@@ -220,3 +220,30 @@ footer a:hover {
     border: 1px solid #ccc;
     padding: 10px;
 }
+
+/* Test */
+.header-bar {
+    background-color: #4a3f35;
+    color: #fff;
+    padding: 10px 20px;
+    height: 80px;
+}
+
+.footer-bar {
+    background-color: #4a3f35;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 14px;
+}
+
+.footer-bar a {
+    color: #ffc966;
+    text-decoration: none;
+}
+
+.footer-bar a:hover {
+    text-decoration: underline;
+}
