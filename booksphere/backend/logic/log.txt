@@ -7,3 +7,11 @@ UPDATE: id=1, field=rating, value=4.5
 UPDATE: id=1, field=price, value=18.99
 UPDATE: id=1, field=category, value=Science Fiction
 UPDATE: id=1, field=name, value=The Star Map
+UPDATE: id=1, field=category, value=Science Fiction
+UPDATE: id=1, field=rating, value=4.6
+UPDATE: id=1, field=price, value=18.99
+UPDATE: id=1, field=name, value=The Star Map
+UPDATE: id=1, field=price, value=18.99
+UPDATE: id=1, field=name, value=The Star Map
+UPDATE: id=1, field=rating, value=4.5
+UPDATE: id=1, field=category, value=Science Fiction
