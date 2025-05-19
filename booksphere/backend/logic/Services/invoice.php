@@ -1,7 +1,7 @@
 <?php
-require_once '../config/dbaccess.php';
-require_once '../models/Order.class.php';
-require_once __DIR__ . '/../vendor/fpdf186/fpdf.php';
+require_once '../../config/dbaccess.php';
+require_once '../../models/Order.class.php';
+require_once __DIR__ . '/../../vendor/fpdf186/fpdf.php';
 
 session_start();
 
@@ -37,7 +37,7 @@ $pdf->AddPage();
 $pdf->SetAutoPageBreak(true, 30);
 
 // === Logo & Titel ===
-$pdf->Image(__DIR__ . '/../productpictures/booksphere-logo.png', 10, 10, 40);
+$pdf->Image(__DIR__ . '/../../productpictures/booksphere-logo.png', 10, 10, 40);
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->Cell(0, 10, 'Booksphere - Rechnung', 0, 1, 'C');
 $pdf->Ln(30);

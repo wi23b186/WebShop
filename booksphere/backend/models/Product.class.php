@@ -2,8 +2,10 @@
 <?php
 class Product {
     private $pdo;
+    private $uploadDir;
     public function __construct($pdo) {
         $this->pdo = $pdo;
+    $this->uploadDir = __DIR__ . '/../productpictures/';
     }
  public function getAll() {
         $stmt = $this->pdo->query("SELECT * FROM products");
@@ -19,9 +21,42 @@ class Product {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-  public function create($name, $description, $price, $category, $rating, $image) {
-        $stmt = $this->pdo->prepare("INSERT INTO products (name, description, price, category, rating, image) VALUES (?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([$name, $description, $price, $category, $rating, $image]);
+ public function create($data, $imageFile) {
+        // Pflichtfelder prüfen
+        $required = ['name', 'description', 'price', 'category', 'rating'];
+        foreach ($required as $field) {
+            if (empty($data[$field])) {
+                return [false, 'Alle Felder sind Pflicht.'];
+            }
+        }
+
+        // Bild speichern
+        if (!isset($imageFile['tmp_name']) || !is_uploaded_file($imageFile['tmp_name'])) {
+            return [false, 'Bild fehlt oder konnte nicht hochgeladen werden.'];
+        }
+
+        $filename = uniqid() . '_' . basename($imageFile['name']);
+        $targetPath = $this->uploadDir . $filename;
+
+        if (!move_uploaded_file($imageFile['tmp_name'], $targetPath)) {
+            return [false, 'Fehler beim Hochladen des Bildes.'];
+        }
+
+        // In Datenbank einfügen
+        $stmt = $this->pdo->prepare("
+            INSERT INTO products (name, description, price, category, rating, image)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        $success = $stmt->execute([
+            $data['name'],
+            $data['description'],
+            $data['price'],
+            $data['category'],
+            $data['rating'],
+            $filename
+        ]);
+
+        return [$success, $success ? null : 'Fehler beim Speichern in der Datenbank.'];
     }
 
     public function delete($id) {

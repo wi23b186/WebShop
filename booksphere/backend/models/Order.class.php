@@ -80,5 +80,37 @@ class Order {
 
         return $order;
     }
+public function removeOrderItemAndUpdateTotal($itemId) {
+    // Hole order_id
+    $stmt = $this->pdo->prepare("SELECT order_id FROM order_items WHERE id = ?");
+    $stmt->execute([$itemId]);
+    $orderId = $stmt->fetchColumn();
+
+    if (!$orderId) {
+        return ['success' => false, 'message' => 'Order-ID nicht gefunden'];
+    }
+
+    // Lösche das Produkt aus order_items
+    $stmt = $this->pdo->prepare("DELETE FROM order_items WHERE id = ?");
+    $success = $stmt->execute([$itemId]);
+
+    if ($success) {
+        // Neue Gesamtsumme berechnen
+        $stmt = $this->pdo->prepare("SELECT SUM(price * quantity) FROM order_items WHERE order_id = ?");
+        $stmt->execute([$orderId]);
+        $newTotal = $stmt->fetchColumn();
+        if ($newTotal === null) $newTotal = 0;
+
+        // Update orders.total
+        $stmt = $this->pdo->prepare("UPDATE orders SET total = ? WHERE id = ?");
+        $stmt->execute([$newTotal, $orderId]);
+
+        return ['success' => true, 'newTotal' => $newTotal];
+    } else {
+        return ['success' => false, 'message' => 'Löschen fehlgeschlagen'];
+    }
+}
+
+
 }
 ?>

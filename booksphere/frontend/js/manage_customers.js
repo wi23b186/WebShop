@@ -2,7 +2,7 @@ $(document).ready(function () {
     loadCustomers();
 
     function loadCustomers() {
-        $.getJSON('../backend/logic/manageCustomers.php?action=getCustomers', function (customers) {
+        $.getJSON('../backend/logic/controllers/customerController.php?action=getCustomers', function (customers) {
             const table = $('#customer-table-body');
             table.empty();
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
         const newStatus = $(this).data('active') == 1 ? 0 : 1;
 
         $.ajax({
-            url: '../backend/logic/manageCustomers.php',
+            url: '../backend/logic/controllers/customerController.php',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -65,7 +65,7 @@ $(document).ready(function () {
             .data('current-user', userId)
             .html('<p>Lade Bestellungen...</p>');
 
-        $.getJSON(`../backend/logic/manageCustomers.php?action=getOrders&user_id=${userId}`, function (orders) {
+        $.getJSON(`../backend/logic/controllers/customerController.php?action=getOrders&user_id=${userId}`, function (orders) {
             if (orders.length === 0) {
                 $('#orders-section').html('<p>Keine Bestellungen gefunden.</p>');
                 return;
@@ -94,7 +94,7 @@ $(document).ready(function () {
         const itemId = $(this).data('id');
         if (!confirm('Produkt wirklich aus Bestellung entfernen?')) return;
 
-        $.post('../backend/logic/manageCustomers.php', {
+        $.post('../backend/logic/controllers/customerController.php', {
             action: 'removeOrderItem',
             item_id: itemId
         }, function (response) {

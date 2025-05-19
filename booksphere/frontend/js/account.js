@@ -56,7 +56,7 @@ $(document).ready(function () {
             return;
         }
 
-        $.post('../backend/logic/updateAccountData.php', updated, function (response) {
+        $.post('../backend/logic/UserManagement/updateAccountData.php', updated, function (response) {
             if (response.success) {
                 userData = Object.assign(userData, updated);
                 renderViewMode(userData);
@@ -93,7 +93,7 @@ $(document).ready(function () {
                                         <li>${item.name} – Menge: ${item.quantity} – Preis: € ${item.price}</li>
                                     `).join('')}
                                 </ul>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/invoice.php?order_id=${orderId}', '_blank')">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/Services/invoice.php?order_id=${orderId}', '_blank')">
                                     Rechnung generieren
                                 </button>
                             </div>

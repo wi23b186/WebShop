@@ -7,8 +7,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'customer') {
     exit;
 }
 
-require_once '../config/dbaccess.php';
-require_once '../models/User.class.php';
+require_once '../../config/dbaccess.php';
+require_once '../../models/User.class.php';
 
 $db = new DBAccess();
 $pdo = $db->pdo;
@@ -40,7 +40,7 @@ $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
 $stmt->execute([$userId]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$row || !password_verify($_POST['current_password'], $row['password'])) {
+if (!$user->checkPassword($userId, $_POST['current_password'])) {
     echo json_encode(['success' => false, 'message' => 'Falsches Passwort.']);
     exit;
 }
