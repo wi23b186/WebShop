@@ -27,7 +27,7 @@ $(document).ready(function () {
 
     $(document).on('click', '.add-to-cart', function () {
         const productId = $(this).data('id');
-        $.post('../backend/logic/cartHandler.php', {
+        $.post('../backend/logic/OrderHandling/cartHandler.php', {
             action: 'add',
             product_id: productId
         }, function () {
