@@ -151,14 +151,14 @@ $(document).ready(function () {
 
     // Anzahl im Header aktualisieren
     function updateCartCount() {
-        $.getJSON('../backend/logic/cartHandler.php?action=getCount', function (data) {
+        $.getJSON('../backend/logic/OrderHandling/cartHandler.php?action=getCount', function (data) {
             $('#cart-count').text(data.count);
         });
     }
 
     // Menge ändern
     function updateQuantity(id, change) {
-        $.post('../backend/logic/cartHandler.php', {
+        $.post('../backend/logic/OrderHandling/cartHandler.php', {
             action: 'updateQuantity',
             product_id: id,
             change: change
