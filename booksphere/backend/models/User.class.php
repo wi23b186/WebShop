@@ -158,5 +158,13 @@ class User {
         $stmt = $this->pdo->prepare("UPDATE users SET active = ? WHERE id = ?");
         return $stmt->execute([$status, $id]);
     }
+public function checkPassword($id, $password) {
+    $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
+    $stmt->execute([$id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $row && password_verify($password, $row['password']);
+}
+
 }
 ?>
