@@ -124,11 +124,7 @@ $(document).ready(function () {
                                     `).join('')}
                                 </ul>
                                 <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/Services/invoice.php?order_id=${orderId}', '_blank')">
-<<<<<<< HEAD
                                     <i class="bi bi-file-earmark-pdf"></i> Rechnung generieren
-=======
-                                    Rechnung generieren
->>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
                                 </button>
                             </div>
                         </div>

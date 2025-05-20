@@ -61,22 +61,10 @@ $(document).ready(function () {
     });
 
     function loadOrders(userId) {
-<<<<<<< HEAD
   $('#orders-section')
         .removeClass('d-none') // <--- Das hier hinzufügen!
         .data('current-user', userId)
         .html('<p>Lade Bestellungen...</p>');
-=======
-        $('#orders-section')
-            .data('current-user', userId)
-            .html('<p>Lade Bestellungen...</p>');
-
-        $.getJSON(`../backend/logic/controllers/customerController.php?action=getOrders&user_id=${userId}`, function (orders) {
-            if (orders.length === 0) {
-                $('#orders-section').html('<p>Keine Bestellungen gefunden.</p>');
-                return;
-            }
->>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
 
     $.getJSON(`../backend/logic/controllers/customerController.php?action=getOrders&user_id=${userId}`, function (orders) {
         if (orders.length === 0) {
