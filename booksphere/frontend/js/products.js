@@ -65,10 +65,18 @@ $(document).ready(function () {
                                     </button>
                                 </div>
                             </div>
+<<<<<<< HEAD
                         </div>
                     `;
                 });
                 html += '</div>';
+=======
+                        `;
+                    });
+                }
+                $('#product-list').html(html);
+                initDragAndDrop();
+>>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
             }
 
             $('#product-list').html(html);
@@ -79,11 +87,16 @@ $(document).ready(function () {
 
     }
 
+
+
     function updateCartCount() {
         $.getJSON('../backend/logic/OrderHandling/cartHandler.php?action=getCount', function (data) {
             $('#cart-count').text(data.count);
         });
     }
+
+   
+
 
     function loadNav() {
         $.getJSON('../backend/logic/UserManagement/userStatus.php', function (data) {
@@ -92,11 +105,19 @@ $(document).ready(function () {
             nav.append('<a href="index.html">Startseite</a>');
             nav.append('<a href="products.html">Produkte</a>');
             nav.append(`
+<<<<<<< HEAD
                 <a href="cart.html" id="cart-icon" class="position-relative">
                     <i class="bi bi-cart4" style="font-size: 1.3rem;"></i>
                     (<span id="cart-count">0</span>)
                 </a>
             `);
+=======
+  <a href="cart.html" id="cart-icon">
+    <i class="bi bi-cart4" style="font-size: 1.3rem;"></i>
+    (<span id="cart-count">0</span>)
+  </a>
+`);
+>>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
 
             if (data.loggedIn) {
                 if (data.role === 'admin') {
@@ -117,8 +138,14 @@ $(document).ready(function () {
         });
     }
 
+<<<<<<< HEAD
     function initDragAndDrop() {
         console.log('Drag & Drop initialisiert');
+=======
+
+     function initDragAndDrop() {
+    console.log('Drag & Drop initialisiert');
+>>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
 
         document.querySelectorAll('.product-item').forEach(item => {
             item.setAttribute('draggable', true);

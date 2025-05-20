@@ -50,6 +50,7 @@ if ($action === 'removeOrderItem') {
     exit;
 }
 
+<<<<<<< HEAD
 if ($_POST['action'] === 'deleteOrder' && isset($_POST['order_id'])) {
     $orderId = (int) $_POST['order_id'];
     
@@ -65,5 +66,7 @@ if ($_POST['action'] === 'deleteOrder' && isset($_POST['order_id'])) {
 }
 
 
+=======
+>>>>>>> e62d31d535de5c171550664e5fbb8f331617f11a
 
 echo json_encode(['success' => false, 'message' => 'Ungültige Aktion']);
