@@ -22,7 +22,6 @@ class Voucher {
         return $code;
     }
 
-
     public function validate($code) {
         $stmt = $this->pdo->prepare("SELECT * FROM vouchers WHERE code = ? AND expiry_date >= CURDATE()");
         $stmt->execute([$code]);

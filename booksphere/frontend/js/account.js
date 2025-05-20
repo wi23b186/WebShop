@@ -1,26 +1,56 @@
-// js/account.js
-
 $(document).ready(function () {
     let userData = {};
 
     function renderViewMode(data) {
         $('#account-form').html(`
-            <p><strong>Anrede:</strong> ${data.salutation}</p>
-            <p><strong>Name:</strong> ${data.firstname} ${data.lastname}</p>
-            <p><strong>Adresse:</strong> ${data.address}, ${data.postalcode} ${data.city}</p>
-            <p><strong>E-Mail:</strong> ${data.email}</p>
-            <p><strong>Zahlungsinfo:</strong> ${data.payment_info}</p>
+            <div class="row gy-2">
+                <div class="col-12">
+                    <p><strong>Anrede:</strong> ${data.salutation}</p>
+                </div>
+                <div class="col-12">
+                    <p><strong>Name:</strong> ${data.firstname} ${data.lastname}</p>
+                </div>
+                <div class="col-12">
+                    <p><strong>Adresse:</strong> ${data.address}, ${data.postalcode} ${data.city}</p>
+                </div>
+                <div class="col-12">
+                    <p><strong>E-Mail:</strong> ${data.email}</p>
+                </div>
+                <div class="col-12">
+                    <p><strong>Zahlungsinfo:</strong> ${data.payment_info}</p>
+                </div>
+            </div>
         `);
     }
 
     function renderEditMode(data) {
         $('#account-form').html(`
-            <label>Adresse:<br><input type="text" id="address" value="${data.address}" class="large-input"></label><br><br>
-            <label>PLZ:<br><input type="text" id="postalcode" value="${data.postalcode}" class="large-input"></label><br><br>
-            <label>Stadt:<br><input type="text" id="city" value="${data.city}" class="large-input"></label><br><br>
-            <label>Zahlungsinfo:<br><input type="text" id="payment_info" value="${data.payment_info}" class="large-input"></label><br><br>
-            <label>Benutzername:<br><input type="text" id="username" value="${data.username}" class="large-input"></label><br><br>
-            <label>Aktuelles Passwort:<br><input type="password" id="current_password" class="large-input" required></label><br><br>
+            <div class="row gy-3">
+                <div class="col-md-6">
+                    <label for="address" class="form-label">Adresse</label>
+                    <input type="text" id="address" value="${data.address}" class="form-control form-control-lg rounded-3 shadow-sm">
+                </div>
+                <div class="col-md-3">
+                    <label for="postalcode" class="form-label">PLZ</label>
+                    <input type="text" id="postalcode" value="${data.postalcode}" class="form-control form-control-lg rounded-3 shadow-sm">
+                </div>
+                <div class="col-md-3">
+                    <label for="city" class="form-label">Stadt</label>
+                    <input type="text" id="city" value="${data.city}" class="form-control form-control-lg rounded-3 shadow-sm">
+                </div>
+                <div class="col-md-6">
+                    <label for="payment_info" class="form-label">Zahlungsinfo</label>
+                    <input type="text" id="payment_info" value="${data.payment_info}" class="form-control form-control-lg rounded-3 shadow-sm">
+                </div>
+                <div class="col-md-6">
+                    <label for="username" class="form-label">Benutzername</label>
+                    <input type="text" id="username" value="${data.username}" class="form-control form-control-lg rounded-3 shadow-sm">
+                </div>
+                <div class="col-md-12">
+                    <label for="current_password" class="form-label">Aktuelles Passwort</label>
+                    <input type="password" id="current_password" class="form-control form-control-lg rounded-3 shadow-sm" required>
+                </div>
+            </div>
         `);
     }
 
@@ -56,7 +86,7 @@ $(document).ready(function () {
             return;
         }
 
-        $.post('../backend/logic/updateAccountData.php', updated, function (response) {
+        $.post('../backend/logic/UserManagement/updateAccountData.php', updated, function (response) {
             if (response.success) {
                 userData = Object.assign(userData, updated);
                 renderViewMode(userData);
@@ -88,13 +118,13 @@ $(document).ready(function () {
                         <div id="collapse${index}" class="accordion-collapse collapse" aria-labelledby="heading${index}" data-bs-parent="#order-history">
                             <div class="accordion-body">
                                 ${order.voucher_code ? `<p><strong>Verwendeter Gutscheincode:</strong> ${order.voucher_code}</p>` : ''}
-                                <ul>
+                                <ul class="mb-3">
                                     ${order.items.map(item => `
                                         <li>${item.name} – Menge: ${item.quantity} – Preis: € ${item.price}</li>
                                     `).join('')}
                                 </ul>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/invoice.php?order_id=${orderId}', '_blank')">
-                                    Rechnung generieren
+                                <button class="btn btn-sm btn-outline-secondary" onclick="window.open('../backend/logic/Services/invoice.php?order_id=${orderId}', '_blank')">
+                                    <i class="bi bi-file-earmark-pdf"></i> Rechnung generieren
                                 </button>
                             </div>
                         </div>

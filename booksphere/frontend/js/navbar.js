@@ -4,7 +4,12 @@ $(document).ready(function() {
         nav.empty();
         nav.append('<a href="index.html">Startseite</a>');
         nav.append('<a href="products.html">Produkte</a>');
-        nav.append('<a href="cart.html">Warenkorb (<span id="cart-count">0</span>)</a>');
+        nav.append(`
+  <a href="cart.html" id="cart-icon">
+    <i class="bi bi-cart4" style="font-size: 1.3rem;"></i>
+    (<span id="cart-count">0</span>)
+  </a>
+`);
 
         if (data.loggedIn) {
             if (data.role === 'admin') {
@@ -25,7 +30,7 @@ $(document).ready(function() {
     });
 
     function updateCartCount() {
-        $.getJSON('../backend/logic/cartHandler.php?action=getCount', function(data) {
+        $.getJSON('../backend/logic/OrderHandling/cartHandler.php?action=getCount', function(data) {
             $('#cart-count').text(data.count);
         });
     }

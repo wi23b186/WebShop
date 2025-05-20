@@ -2,7 +2,7 @@ $(document).ready(function () {
     loadCustomers();
 
     function loadCustomers() {
-        $.getJSON('../backend/logic/manageCustomers.php?action=getCustomers', function (customers) {
+        $.getJSON('../backend/logic/controllers/customerController.php?action=getCustomers', function (customers) {
             const table = $('#customer-table-body');
             table.empty();
 
@@ -36,7 +36,7 @@ $(document).ready(function () {
         const newStatus = $(this).data('active') == 1 ? 0 : 1;
 
         $.ajax({
-            url: '../backend/logic/manageCustomers.php',
+            url: '../backend/logic/controllers/customerController.php',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -61,32 +61,35 @@ $(document).ready(function () {
     });
 
     function loadOrders(userId) {
-        $('#orders-section')
-            .data('current-user', userId)
-            .html('<p>Lade Bestellungen...</p>');
+  $('#orders-section')
+        .removeClass('d-none') // <--- Das hier hinzufügen!
+        .data('current-user', userId)
+        .html('<p>Lade Bestellungen...</p>');
 
-        $.getJSON(`../backend/logic/manageCustomers.php?action=getOrders&user_id=${userId}`, function (orders) {
-            if (orders.length === 0) {
-                $('#orders-section').html('<p>Keine Bestellungen gefunden.</p>');
-                return;
-            }
+    $.getJSON(`../backend/logic/controllers/customerController.php?action=getOrders&user_id=${userId}`, function (orders) {
+        if (orders.length === 0) {
+            $('#orders-section').html('<p>Keine Bestellungen gefunden.</p>');
+            return;
+        }
 
-            let html = '<h3>Bestellungen</h3>';
-            orders.forEach(order => {
-                html += `<div class="card mb-3"><div class="card-body">
-                    <h5>Bestellung #${order.id} vom ${order.order_date} – Gesamt: € ${parseFloat(order.total).toFixed(2)}</h5>
-                    <ul class="list-group">`;
-                order.items.forEach(item => {
-                    html += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                        ${item.name} – Menge: ${item.quantity} – Preis: € ${parseFloat(item.price).toFixed(2)}
-                        <button class="btn btn-sm btn-danger remove-item" data-id="${item.id}">Entfernen</button>
-                    </li>`;
-                });
-                html += `</ul></div></div>`;
+        let html = '<h3>Bestellungen</h3>';
+        orders.forEach(order => {
+          html += `<div class="card mb-3"><div class="card-body">
+    <h5>Bestellung #${order.id} vom ${order.order_date} – Gesamt: € ${parseFloat(order.total).toFixed(2)}</h5>
+    <button class="btn btn-outline-danger btn-sm mb-2 delete-order" data-id="${order.id}">Bestellung verwerfen</button>
+    <ul class="list-group">`;
+
+            order.items.forEach(item => {
+                html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${item.name} – Menge: ${item.quantity} – Preis: € ${parseFloat(item.price).toFixed(2)}
+                    <button class="btn btn-sm btn-danger remove-item" data-id="${item.id}">Entfernen</button>
+                </li>`;
             });
-
-            $('#orders-section').html(html);
+            html += `</ul></div></div>`;
         });
+
+        $('#orders-section').html(html);
+    });
     }
 
     // 🗑️ Einzelne Bestellung entfernen + neu laden
@@ -94,7 +97,7 @@ $(document).ready(function () {
         const itemId = $(this).data('id');
         if (!confirm('Produkt wirklich aus Bestellung entfernen?')) return;
 
-        $.post('../backend/logic/manageCustomers.php', {
+        $.post('../backend/logic/controllers/customerController.php', {
             action: 'removeOrderItem',
             item_id: itemId
         }, function (response) {
@@ -106,4 +109,22 @@ $(document).ready(function () {
             }
         }, 'json');
     });
+
+    $(document).on('click', '.delete-order', function () {
+    const orderId = $(this).data('id');
+    if (!confirm('Willst du wirklich die gesamte Bestellung löschen?')) return;
+
+    $.post('../backend/logic/controllers/customerController.php', {
+        action: 'deleteOrder',
+        order_id: orderId
+    }, function (response) {
+        if (response.success) {
+            const userId = $('#orders-section').data('current-user');
+            loadOrders(userId); // Aktualisiert die Ansicht
+        } else {
+            alert('Fehler beim Löschen der Bestellung.');
+        }
+    }, 'json');
+});
+
 });

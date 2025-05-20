@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Mein Konto</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/navbar.js"></script>
-    <script src="js/account.js"></script>
+  <meta charset="UTF-8">
+  <title>Mein Konto</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/navbar.js"></script>
+  <script src="js/account.js"></script>
 </head>
-<body>
-<header>
-    <img src="img/booksphere-logo.png" alt="Booksphere Logo" class="logo">
-    <nav id="nav-bar"></nav>
-</header>
 
-<main>
-    <h1>Mein Konto</h1>
-    <form id="account-form" class="account-form">
-        <!-- Felder werden von JS eingefügt -->
-    </form>
-    <div style="text-align:center; margin-top:20px;">
-        <button id="edit-btn">Bearbeiten</button>
-        <button id="save-btn" style="display:none;">Speichern</button>
+<body class="bg-light">
+  <header class="bg-white border-bottom shadow-sm py-3 mb-4">
+    <div class="container d-flex align-items-center justify-content-between">
+      <img src="img/booksphere-logo.png" alt="Booksphere Logo" class="logo" style="height: 50px;">
+      <nav id="nav-bar"></nav>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <h1 class="text-center mb-4"><i class="bi bi-person-circle"></i> Mein Konto</h1>
+
+    <!-- Kontodaten -->
+    <div class="card shadow-sm mb-5">
+      <div class="card-body">
+        <form id="account-form" class="row gy-3">
+          <!-- Felder werden dynamisch per JS eingefügt -->
+        </form>
+
+        <div class="text-center mt-4">
+          <button id="edit-btn" class="btn btn-outline-primary me-2">
+            <i class="bi bi-pencil-square"></i> Bearbeiten
+          </button>
+          <button id="save-btn" class="btn btn-dark" style="display:none;">
+            <i class="bi bi-save"></i> Speichern
+          </button>
+        </div>
+      </div>
     </div>
 
-         <h2 class="mb-3">Meine Bestellungen</h2>
-   <div id="order-history" class="accordion"></div>
-        <!-- Bestellverlauf wird dynamisch mit JS gefüllt -->
+    <!-- Bestellverlauf -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="mb-3"><i class="bi bi-box-seam"></i> Meine Bestellungen</h2>
+        <div id="order-history" class="accordion">
+          <!-- Wird dynamisch mit JS gefüllt -->
+        </div>
+      </div>
     </div>
-    
-</main>
+  </main>
 
-<footer>
-    <p>&copy; 2025 Booksphere Webshop | <a href="imprint.html">Impressum</a></p>
-</footer>
+  <footer class="text-center mt-5 py-3 border-top bg-white">
+    <p class="mb-0">&copy; 2025 Booksphere Webshop | <a href="imprint.html" class="text-warning text-decoration-none">Impressum</a></p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

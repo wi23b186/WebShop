@@ -1,4 +1,6 @@
 
+/*
+
 $(document).ready(function(){
     $('#view-products').click(function(e){
         e.preventDefault();
@@ -23,3 +25,5 @@ $(document).ready(function(){
         });
     });
 });
+
+*/

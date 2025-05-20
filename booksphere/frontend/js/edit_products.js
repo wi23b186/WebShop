@@ -31,7 +31,7 @@ $(document).ready(function () {
         }
     });
 
-    // 🔁 Einzelne Felder aktualisieren (nacheinander senden)
+    // Felder aktualisieren
     $(document).on('click', '.update-btn', function () {
         const row = $(this).closest('tr');
         const id = $(this).data('id');
@@ -59,14 +59,18 @@ $(document).ready(function () {
                 rows += `
                 <tr>
                     <td>${prod.id}</td>
-                    <td><input class="name" value="${prod.name}"></td>
-                    <td><input class="price" type="number" step="0.01" value="${prod.price}"></td>
-                    <td><input class="category" value="${prod.category}"></td>
-                    <td><input class="rating" type="number" step="0.1" value="${prod.rating}"></td>
-                    <td><img src="../backend/productpictures/${prod.image}" width="50"></td>
-                    <td>
-                        <button class="update-btn" data-id="${prod.id}">Speichern</button>
-                        <button class="delete-btn" data-id="${prod.id}">Löschen</button>
+                    <td><input class="form-control form-control-sm name" value="${prod.name}"></td>
+                    <td><input class="form-control form-control-sm price" type="number" step="0.01" value="${prod.price}"></td>
+                    <td><input class="form-control form-control-sm category" value="${prod.category}"></td>
+                    <td><input class="form-control form-control-sm rating" type="number" step="0.1" value="${prod.rating}"></td>
+                    <td><img src="../backend/productpictures/${prod.image}" width="50" class="rounded shadow-sm"></td>
+                    <td class="d-flex gap-2">
+                        <button class="btn btn-sm btn-dark update-btn" data-id="${prod.id}">
+                            <i class="bi bi-save"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${prod.id}">
+                            <i class="bi bi-trash"></i>
+                        </button>
                     </td>
                 </tr>
                 `;
