@@ -1,11 +1,13 @@
 $(document).ready(function () {
     loadCustomers();
 
+    // Funktion zum Laden aller Kunden
     function loadCustomers() {
         $.getJSON('../backend/logic/controllers/customerController.php?action=getCustomers', function (customers) {
             const table = $('#customer-table-body');
-            table.empty();
+            table.empty(); // Vorherige Einträge entfernen
 
+            // Jeden Kunden als Tabellenzeile einfügen
             customers.forEach(c => {
                 const activeToggle = `
                     <button class="btn btn-sm ${c.active == 1 ? 'btn-danger' : 'btn-success'} toggle-active" 
@@ -31,6 +33,7 @@ $(document).ready(function () {
         });
     }
 
+    // Aktivierungsstatus eines Kunden ändern (Aktivieren / Deaktivieren)
     $(document).on('click', '.toggle-active', function () {
         const userId = $(this).data('id');
         const newStatus = $(this).data('active') == 1 ? 0 : 1;
@@ -46,7 +49,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (response.success) {
-                    loadCustomers();
+                    loadCustomers(); // Liste neu laden
                 } else {
                     alert('Fehler: ' + response.message);
                 }
@@ -54,15 +57,16 @@ $(document).ready(function () {
         });
     });
 
-    // 🧾 Bestellungen anzeigen und merken für spätere Updates
+    // Bestellungen eines Kunden anzeigen
     $(document).on('click', '.view-orders', function () {
         const userId = $(this).data('id');
         loadOrders(userId);
     });
 
+    // Funktion zum Laden der Bestellungen eines Kunden
     function loadOrders(userId) {
   $('#orders-section')
-        .removeClass('d-none') // <--- Das hier hinzufügen!
+        .removeClass('d-none') // Bestellbereich einblenden
         .data('current-user', userId)
         .html('<p>Lade Bestellungen...</p>');
 
@@ -72,6 +76,7 @@ $(document).ready(function () {
             return;
         }
 
+        // Bestellungen als Karten anzeigen
         let html = '<h3>Bestellungen</h3>';
         orders.forEach(order => {
           html += `<div class="card mb-3"><div class="card-body">
@@ -79,6 +84,7 @@ $(document).ready(function () {
     <button class="btn btn-outline-danger btn-sm mb-2 delete-order" data-id="${order.id}">Bestellung verwerfen</button>
     <ul class="list-group">`;
 
+            // Bestellpositionen auflisten
             order.items.forEach(item => {
                 html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${item.name} – Menge: ${item.quantity} – Preis: € ${parseFloat(item.price).toFixed(2)}
@@ -92,7 +98,7 @@ $(document).ready(function () {
     });
     }
 
-    // 🗑️ Einzelne Bestellung entfernen + neu laden
+    // Einzelne Bestellung entfernen + neu laden
     $(document).on('click', '.remove-item', function () {
         const itemId = $(this).data('id');
         if (!confirm('Produkt wirklich aus Bestellung entfernen?')) return;
@@ -110,6 +116,7 @@ $(document).ready(function () {
         }, 'json');
     });
 
+    // Ganze Bestellung löschen
     $(document).on('click', '.delete-order', function () {
     const orderId = $(this).data('id');
     if (!confirm('Willst du wirklich die gesamte Bestellung löschen?')) return;

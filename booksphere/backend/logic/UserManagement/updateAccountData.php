@@ -2,6 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
+// Nur eingeloggte Kunden dürfen Daten ändern
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'customer') {
     echo json_encode(['success' => false, 'message' => 'Nicht erlaubt.']);
     exit;
@@ -16,6 +17,7 @@ $user = new User($pdo);
 
 $userId = $_SESSION['user']['id'];
 
+// Nur diese Felder dürfen geändert werden
 $allowedFields = ['address', 'postalcode', 'city', 'payment_info', 'username'];
 $dataToUpdate = [];
 
@@ -30,6 +32,7 @@ if (empty($dataToUpdate)) {
     exit;
 }
 
+// Passwortprüfung ist Pflicht
 if (!isset($_POST['current_password']) || trim($_POST['current_password']) === '') {
     echo json_encode(['success' => false, 'message' => 'Passwort ist erforderlich.']);
     exit;
@@ -45,6 +48,7 @@ if (!$user->checkPassword($userId, $_POST['current_password'])) {
     exit;
 }
 
+// Änderungen speichern
 $success = $user->updatePartial($userId, $dataToUpdate);
 
 if ($success) {

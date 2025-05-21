@@ -10,6 +10,7 @@ class MainHandler {
         $this->product = new Product($pdo);
     }
 
+    // Einstiegspunkt: verarbeitet GET- und POST-Anfragen
     public function handle() {
         $method = $_SERVER['REQUEST_METHOD'];
         $action = $_REQUEST['action'] ?? '';
@@ -21,6 +22,7 @@ class MainHandler {
         }
     }
 
+    // POST-Anfragen: Registrierung und Login
     private function handlePost($action) {
         if ($action === 'register') {
             $result = $this->user->register($_POST);
@@ -40,6 +42,7 @@ class MainHandler {
         }
     }
 
+    // GET-Anfragen: Produktsuche & Produktdetails
     private function handleGet($action) {
         if ($action === 'getProducts') {
             echo json_encode($this->product->getAllProducts());

@@ -2,21 +2,21 @@ $(document).ready(function () {
     loadNav();
     loadProducts();
 
-    // 🔍 Live-Search
+    // Live-Search
     $('#searchInput').on('input', function () {
         const query = $(this).val();
         const category = $('#category-filter').val();
         loadProducts(query, category);
     });
 
-    // 🔄 Kategorie-Filter
+    // Kategorie-Filter
     $('#category-filter').on('change', function () {
         const category = $(this).val();
         const query = $('#searchInput').val();
         loadProducts(query, category);
     });
 
-    // 🛒 In den Warenkorb
+    // In den Warenkorb
     $(document).on('click', '.add-to-cart', function () {
         const productId = $(this).data('id');
         $.post('../backend/logic/OrderHandling/cartHandler.php', {
@@ -28,6 +28,7 @@ $(document).ready(function () {
         });
     });
 
+    // Funktion zum Laden und Anzeigen der Produkte
    function loadProducts(query = '', category = '') {
     $.ajax({
         url: '../backend/logic/requestHandler.php',
@@ -72,23 +73,26 @@ $(document).ready(function () {
             }
 
             $('#product-list').html(html);
-            initDragAndDrop();
+            initDragAndDrop(); // Drag & Drop nachträglich aktivieren
         }
     });
 
 
     }
 
+    // Warenkorb-Zähler aktualisieren
     function updateCartCount() {
         $.getJSON('../backend/logic/OrderHandling/cartHandler.php?action=getCount', function (data) {
             $('#cart-count').text(data.count);
         });
     }
 
+    // Navigation dynamisch laden abhängig vom Login-Status & Rolle
     function loadNav() {
         $.getJSON('../backend/logic/UserManagement/userStatus.php', function (data) {
             let nav = $('#nav-bar');
             nav.empty();
+            // Basisnavigation
             nav.append('<a href="index.html">Startseite</a>');
             nav.append('<a href="products.html">Produkte</a>');
             nav.append(`
@@ -100,15 +104,18 @@ $(document).ready(function () {
 
             if (data.loggedIn) {
                 if (data.role === 'admin') {
+                    // Admin-Navigation
                     nav.append('<a href="edit_products.html">Produkte bearbeiten</a>');
                     nav.append('<a href="manage_customers.html">Kunden bearbeiten</a>');
                     nav.append('<a href="manage_vouchers.html">Gutscheine verwalten</a>');
                 } else {
+                    // Kunden-Navigation
                     nav.append('<a href="account.html">Mein Konto</a>');
                     nav.append('<a href="change_password.html">Passwort ändern</a>');
                 }
                 nav.append('<a href="../backend/logic/UserManagement/logout.php">Logout (' + data.username + ')</a>');
             } else {
+                // Gast-Navigation
                 nav.append('<a href="register.html">Registrieren</a>');
                 nav.append('<a href="login.html">Login</a>');
             }
@@ -117,9 +124,11 @@ $(document).ready(function () {
         });
     }
 
+    // Drag & Drop Funktion für Produkte zum Warenkorb
     function initDragAndDrop() {
         console.log('Drag & Drop initialisiert');
 
+        // Jedes Produkt draggable machen
         document.querySelectorAll('.product-item').forEach(item => {
             item.setAttribute('draggable', true);
 
@@ -130,6 +139,7 @@ $(document).ready(function () {
             });
         });
 
+        // Warenkorb-Icon als Drop-Zone vorbereiten
         const cartIcon = document.querySelector('#cart-icon');
 
         if (cartIcon) {
@@ -142,6 +152,7 @@ $(document).ready(function () {
                 this.classList.remove('drag-hover');
             });
 
+            // Produkt wird per Drag & Drop in den Warenkorb gelegt
             cartIcon.addEventListener('drop', function (e) {
                 e.preventDefault();
                 this.classList.remove('drag-hover');

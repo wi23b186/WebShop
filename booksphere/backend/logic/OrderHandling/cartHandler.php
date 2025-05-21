@@ -10,6 +10,7 @@ $db = new DBAccess();
 $pdo = $db->pdo;
 $cart = new Cart($pdo);
 
+// POST-Anfragen: Produkt hinzufügen oder Menge ändern
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $productId = $_POST['product_id'] ?? null;
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
-
+// GET-Anfragen: Warenkorbinfos abrufen
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $action = $_GET['action'] ?? '';
 
@@ -42,5 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 }
 
+// Ungültige Anfrage
 echo json_encode(['error' => 'Invalid request']);
 ?>

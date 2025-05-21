@@ -1,6 +1,7 @@
 $(document).ready(function () {
     let userData = {};
 
+    // Ansicht: Daten im Lesemodus anzeigen
     function renderViewMode(data) {
         $('#account-form').html(`
             <div class="row gy-2">
@@ -23,6 +24,7 @@ $(document).ready(function () {
         `);
     }
 
+    // Ansicht: Eingabefelder im Bearbeitungsmodus anzeigen
     function renderEditMode(data) {
         $('#account-form').html(`
             <div class="row gy-3">
@@ -54,8 +56,10 @@ $(document).ready(function () {
         `);
     }
 
+    // Abrufen der aktuellen Benutzerdaten vom Server
     $.getJSON('../backend/logic/UserManagement/getAccountData.php', function (data) {
         if (!data.loggedIn || data.role !== 'customer') {
+            // Weiterleitung zum Login bei fehlender Authentifizierung
             window.location.href = 'login.html';
             return;
         }
@@ -65,12 +69,14 @@ $(document).ready(function () {
         loadOrders();
     });
 
+    // Wechsel in den Bearbeitungsmodus
     $('#edit-btn').on('click', function () {
         renderEditMode(userData);
         $('#edit-btn').hide();
         $('#save-btn').show();
     });
 
+    // Änderungen speichern
     $('#save-btn').on('click', function () {
         const updated = {
             address: $('#address').val(),
@@ -86,8 +92,10 @@ $(document).ready(function () {
             return;
         }
 
+        // Daten an Backend senden und speichern
         $.post('../backend/logic/UserManagement/updateAccountData.php', updated, function (response) {
             if (response.success) {
+                // Lokale Daten aktualisieren und Ansicht zurücksetzen
                 userData = Object.assign(userData, updated);
                 renderViewMode(userData);
                 $('#save-btn').hide();
@@ -99,13 +107,16 @@ $(document).ready(function () {
         }, 'json');
     });
 
+    // Bestellungen laden und in einem Akkordeon anzeigen
     function loadOrders() {
         $.getJSON('../backend/logic/OrderHandling/get_orders.php', function (orders) {
             let html = '';
             let index = 0;
 
+            // Sortieren nach Bestelldatum
             orders.sort((a, b) => new Date(a.order_date) - new Date(b.order_date));
 
+            // Bestellungen als Accordion-Elemente darstellen
             orders.forEach(order => {
                 const orderId = order.id;
                 html += `
