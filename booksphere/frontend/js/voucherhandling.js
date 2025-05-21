@@ -2,11 +2,13 @@ $(document).ready(function () {
     checkAdminAccess();
     loadVouchers();
 
+    // Klick auf "Gutschein erstellen"
   $('#create-voucher').on('click', function () {
        // const code = $('#voucher-code').val().trim().toUpperCase(); // leer? → PHP generiert
         const value = parseFloat($('#voucher-value').val());
         const date = $('#voucher-date').val();
 
+        // Eingabefehler prüfen
         if (!value || value <= 0) {
             alert('Bitte einen gültigen Gutscheinwert eingeben.');
             return;
@@ -17,6 +19,7 @@ $(document).ready(function () {
             return;
         }
 
+        // Gutschein anlegen (PHP generiert den Code)
         $.post('../backend/logic/VoucherHandling/create_voucher.php', {
             value: value,
             date: date
@@ -33,6 +36,7 @@ $(document).ready(function () {
         }, 'json');
     });
 
+    // Funktion: Gutscheine vom Server laden und anzeigen
     function loadVouchers() {
         $.getJSON('../backend/logic/VoucherHandling/list_vouchers.php', function (data) {
             const tbody = $('#voucher-table tbody');
@@ -40,12 +44,14 @@ $(document).ready(function () {
 
             const today = new Date().toISOString().split('T')[0];
 
+            // Für jeden Gutschein eine Tabellenzeile erstellen
             data.forEach(v => {
             const used = parseFloat(v.used_value);
             const total = parseFloat(v.value);
             const today = new Date().setHours(0,0,0,0);
             const expiry = new Date(v.expiry_date).setHours(0,0,0,0);
 
+            // Statuslogik
             let status = '🟢 Aktiv';
             if (expiry < today) {
                 status = '❌ Abgelaufen';
@@ -56,6 +62,7 @@ $(document).ready(function () {
                 status = '🟡 Bald ablaufend';
             }
 
+            // Zeile hinzufügen
             tbody.append(`
                 <tr>
                     <td>${v.code}</td>
@@ -70,6 +77,7 @@ $(document).ready(function () {
         });
     }
 
+    // Klick auf Papierkorb: Gutschein löschen
     $(document).on('click', '.delete-btn', function () {
         const id = $(this).data('id');
         if (confirm('Gutschein wirklich löschen?')) {
@@ -83,6 +91,7 @@ $(document).ready(function () {
         }
     });
 
+    // Zugriffsschutz für Adminseite
     function checkAdminAccess() {
         $.getJSON('../backend/logic/UserManagement/userStatus.php', function (data) {
             if (!data.loggedIn || data.role !== 'admin') {

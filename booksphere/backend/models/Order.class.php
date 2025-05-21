@@ -6,6 +6,7 @@ class Order {
         $this->pdo = $pdo;
     }
 
+    // Neue Bestellung mit Produkten (und optional Gutschein) anlegen
     public function create($userId, $items, $total, $voucherCode = null) {
         $this->pdo->beginTransaction();
 
@@ -38,6 +39,7 @@ class Order {
         return $orderId;
     }
 
+    // Alle Bestellungen eines Nutzers inkl. Artikel abrufen
     public function getOrdersByUser($userId) {
         $stmt = $this->pdo->prepare("SELECT * FROM orders WHERE user_id = ? ORDER BY order_date ASC");
         $stmt->execute([$userId]);
@@ -57,6 +59,7 @@ class Order {
         return $orders;
     }
 
+    // Alle Daten für eine Rechnung abrufen
     public function getOrderDetailsForInvoice($orderId, $userId) {
         $stmt = $this->pdo->prepare("
             SELECT o.*, u.firstname, u.lastname, u.address, u.city, u.postalcode
@@ -80,6 +83,7 @@ class Order {
 
         return $order;
     }
+    // Einzelnes Produkt aus Bestellung entfernen und Gesamtpreis aktualisieren
 public function removeOrderItemAndUpdateTotal($itemId) {
     // Hole order_id
     $stmt = $this->pdo->prepare("SELECT order_id FROM order_items WHERE id = ?");

@@ -4,6 +4,7 @@ header('Content-Type: application/json');
 require_once '../config/dbaccess.php';
 require_once '../models/Product.class.php';
 
+// Zugriff nur für Admins erlaubt
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
     echo json_encode(['success' => false, 'message' => 'Zugriff verweigert.']);
     exit;
@@ -13,6 +14,7 @@ $db = new DBAccess();
 $product = new Product($db->pdo);
 $action = $_REQUEST['action'] ?? '';
 
+// Aktionen basierend auf dem Parameter "action"
 switch ($action) {
     case 'getAll':
         echo json_encode($product->getAll());

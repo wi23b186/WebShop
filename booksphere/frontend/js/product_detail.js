@@ -2,12 +2,15 @@ $(document).ready(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get('id');
 
+    // AJAX-Request: Produktdetails anhand der ID vom Server laden
     $.getJSON('../backend/logic/requestHandler.php', { action: 'getProductById', id: productId }, function (product) {
         if (!product) {
+            // Fehlermeldung anzeigen, falls Produkt nicht gefunden wurde
             $('#product-detail').html('<div class="alert alert-danger">Produkt nicht gefunden.</div>');
             return;
         }
 
+        // HTML-Code für Produktanzeige dynamisch einfügen
         $('#product-detail').html(`
     <div class="row g-5 align-items-start">
         <div class="col-md-5">
@@ -34,8 +37,10 @@ $(document).ready(function () {
 `);
     });
 
+    // Klick auf "In den Warenkorb" → Produkt hinzufügen
     $(document).on('click', '.add-to-cart', function () {
         const productId = $(this).data('id');
+        // AJAX-Request zum Hinzufügen des Produkts in den Warenkorb
         $.post('../backend/logic/OrderHandling/cartHandler.php', {
             action: 'add',
             product_id: productId

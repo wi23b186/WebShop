@@ -6,6 +6,7 @@ class User {
         $this->pdo = $pdo;
     }
 
+    // Registrierung eines neuen Nutzers
     public function register($data) {
         if ($data['password'] !== $data['password_confirm']) {
             return ['success' => false, 'message' => 'Passwords do not match'];
@@ -31,6 +32,7 @@ class User {
         }
     }
 
+    // Login mit Username oder E-Mail
     public function login($identifier, $password, $remember = false) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$identifier, $identifier]);
@@ -47,6 +49,7 @@ class User {
         return false;
     }
 
+    // Komplette Benutzeraktualisierung
     public function update($id, $data) {
         $sql = "UPDATE users SET salutation = ?, firstname = ?, lastname = ?, address = ?, postalcode = ?, city = ?, email = ?, username = ?, payment_info = ? WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
@@ -64,6 +67,7 @@ class User {
         ]);
     }
 
+    // Teilweise Benutzeraktualisierung (dynamisch)
     public function updatePartial($id, $data) {
         if (empty($data)) {
             return false;
@@ -80,12 +84,14 @@ class User {
         return $stmt->execute($values);
     }
 
+    // Einzelnen Nutzer nach ID abrufen
     public function getUserById($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Automatischer Login über Cookie
     public function autoLoginFromCookie() {
         if (!isset($_SESSION['user']) && isset($_COOKIE['remember_user'])) {
             $user = $this->getUserById($_COOKIE['remember_user']);
@@ -95,6 +101,7 @@ class User {
         }
     }
 
+    // Status für Navbar
     public function getSessionUserData() {
         if (isset($_SESSION['user'])) {
             return [
@@ -106,6 +113,7 @@ class User {
         return ['loggedIn' => false];
     }
 
+    // Passwort ändern
     public function changePassword($id, $currentPassword, $newPassword) {
         if (strlen($newPassword) < 6) {
             return ['success' => false, 'message' => 'Neues Passwort ist zu kurz (min. 6 Zeichen).'];
@@ -126,6 +134,7 @@ class User {
         return ['success' => true];
     }
 
+    // Nutzerinfos für Mein-Konto-Seite
     public function getCurrentUserData() {
         if (!isset($_SESSION['user'])) {
             return ['loggedIn' => false];
@@ -147,17 +156,19 @@ class User {
         ];
     }
 
-    // ✅ Zusätzliche Funktionen für Admin-Kundenseite:
+    // Zusätzliche Funktionen für Admin-Kundenseite:
     public function getAllCustomers() {
         $stmt = $this->pdo->prepare("SELECT id, username, email, active FROM users WHERE role = 'customer'");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Aktivieren / Deaktivieren eines Nutzers
     public function setActive($id, $status) {
         $stmt = $this->pdo->prepare("UPDATE users SET active = ? WHERE id = ?");
         return $stmt->execute([$status, $id]);
     }
+    // Passwortprüfung für sensible Änderungen
 public function checkPassword($id, $password) {
     $stmt = $this->pdo->prepare("SELECT password FROM users WHERE id = ?");
     $stmt->execute([$id]);

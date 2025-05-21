@@ -52,6 +52,7 @@ $(document).ready(function () {
         });
     });
 
+    // Produkte laden
     function loadProducts() {
         $.getJSON('../backend/logic/adminProducts.php?action=getAll', function (products) {
             let rows = '';
